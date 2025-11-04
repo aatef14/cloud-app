@@ -67,7 +67,7 @@
         const input = document.getElementById('fileInput');
         if (!input.files.length) return;
         const file = input.files[0];
-        const res = await apiUpload('/upload', file);
+        const res = await apiUpload('/api/upload', file);
         if (res.ok) {
           showAlert('Uploaded successfully', 'success');
           input.value = '';
@@ -78,7 +78,7 @@
       });
 
       async function loadFiles() {
-        const res = await apiGet('/files');
+        const res = await apiGet('/api/files');
         const tbody = document.getElementById('filesTbody');
         tbody.innerHTML = '';
         if (!res.ok) {
@@ -105,7 +105,7 @@
         tbody.querySelectorAll('button[data-action="share"]').forEach(btn => {
           btn.addEventListener('click', async () => {
             const fn = btn.getAttribute('data-fn');
-            const resShare = await apiGet(`/share/${encodeURIComponent(fn)}`);
+            const resShare = await apiGet(`/api/share/${encodeURIComponent(fn)}`);
             if (resShare.ok) {
               await copyToClipboard(resShare.data.share_url);
               showAlert('Share link copied (valid 1 hour)', 'success');
@@ -119,7 +119,7 @@
           btn.addEventListener('click', async () => {
             const fn = btn.getAttribute('data-fn');
             if (!confirm(`Delete ${fn}?`)) return;
-            const resDel = await apiDelete(`/delete/${encodeURIComponent(fn)}`);
+            const resDel = await apiDelete(`/api/delete/${encodeURIComponent(fn)}`);
             if (resDel.ok) {
               showAlert('Deleted', 'success');
               await loadFiles();

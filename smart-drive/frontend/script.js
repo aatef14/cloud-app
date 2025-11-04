@@ -1,4 +1,4 @@
-const API_URL = (typeof window !== 'undefined' && window.API_URL) || (window.localStorage.getItem('API_URL') || 'http://localhost:5000');
+const API_URL = (typeof window !== 'undefined' && window.API_URL) || (window.localStorage.getItem('API_URL') || window.location.origin);
 
 function getToken() {
   return localStorage.getItem('token');
